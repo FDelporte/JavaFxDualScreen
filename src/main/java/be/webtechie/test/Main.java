@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,11 +27,14 @@ public class Main extends Application {
 
     private final Logger logger = LoggerFactory.getLogger(Main.class);
 
+    private List<Screen> screens;
+    private List<Group> groups = new ArrayList<>();
+
     public void start(Stage stage) {
         Rectangle2D bounds = Screen.getPrimary().getBounds();
         logger.info("Screen bounds: {}", bounds);
 
-        List<Screen> screens = Screen.getScreens();
+        screens = Screen.getScreens();
         logger.info("Number of screens found: {}", screens.size());
 
         var width = new double[screens.size()];
@@ -47,13 +51,16 @@ public class Main extends Application {
             offsetY[i] = screens.get(i).getBounds().getMinY();
 
             Group g = createChess(width[i], height[i], (i == 0) ? Color.RED : Color.GREEN );
-            var scene = new Scene (g);
-            var mystage = new Stage();
-            mystage.setX(offsetX[i]);
-            mystage.setY(offsetY[i]);
-            mystage.setWidth(width[i]);
-            mystage.setScene(scene);
-            mystage.show();
+            groups.add(g);
+
+            var scene = new Scene(g);
+            var myStage = new Stage();
+            myStage.setTitle("Screen " + (i + 1));
+            myStage.setX(offsetX[i]);
+            myStage.setY(offsetY[i]);
+            myStage.setWidth(width[i]);
+            myStage.setScene(scene);
+            myStage.show();
         }
     }
 
@@ -70,6 +77,7 @@ public class Main extends Application {
                     r.setFill(color);
                     r.setStrokeWidth(4);
                     r.setStroke(Color.BLACK);
+                    r.setOnMousePressed(e -> showClicked(w0, h0, w/10, h/10));
                     g.getChildren().addAll(r);
                     if (dbg) {
                         var l = new Label("(" + w0 + ", " + h0+")");
@@ -81,6 +89,18 @@ public class Main extends Application {
             }
         }
         return g;
+    }
+
+    public void showClicked(double x, double y, double width, double height) {
+        System.out.println("Clicked box on " + x + "/" + y);
+        var r = new Rectangle(x, y, width, height);
+        r.setFill(Color.ORANGE);
+        r.setStrokeWidth(4);
+        r.setStroke(Color.BLACK);
+
+        for (var i = 0; i < groups.size(); i++) {
+            groups.get(i).getChildren().add(r);
+        }
     }
 
     private HBox UserInterface(Pi4JHelper pi4JHelper) {

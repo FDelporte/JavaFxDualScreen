@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>be.webtechie</groupId>
-    <artifactId>javafx-dual-screen</artifactId>
+    <artifactId>test</artifactId>
     <name>JavaFX dual screen</name>
-    <description>Pi4J Sample JavaFX Code</description>
+    <description>Based on Pi4J Sample JavaFX Code + code provided by Gluon</description>
     <version>0.0.1</version>
 
     <!-- BUILD PROPERTIES -->
@@ -22,8 +22,7 @@
 
         <!-- DEPENDENCIES VERSIONS -->
         <slf4j.version>2.0.0-alpha0</slf4j.version>
-        <pi4j.version>2.0-SNAPSHOT</pi4j.version>
-        <javafx.version>15.0.1</javafx.version>
+        <javafx.version>16</javafx.version>
 
         <!-- BUILD PLUGIN VERSIONS -->
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
@@ -57,30 +56,11 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- include Pi4J Core -->
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-core</artifactId>
-            <version>${pi4j.version}</version>
-        </dependency>
-
         <!-- include JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
-        </dependency>
-
-        <!-- include Pi4J Plugins (Platforms and I/O Providers) -->
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-plugin-raspberrypi</artifactId>
-            <version>${pi4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-plugin-pigpio</artifactId>
-            <version>${pi4j.version}</version>
         </dependency>
     </dependencies>
 

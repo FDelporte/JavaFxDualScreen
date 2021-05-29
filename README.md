@@ -1,7 +1,5 @@
 # JavaFX Dual screen test application for Raspberry Pi
 
-This is a proof-of-concept application demonstrating dual screen support on Raspberry Pi with JavaFX 17.
-
 ## Get JavaFX 17-ea+9
 
 ```
@@ -45,11 +43,3 @@ total 15896
 ```
 
 64bit: wget http://download2.gluonhq.com/drm/lib-1.1.4/aarch64/libgluon_drm.so
-
-## Build and run
-
-```
-mvn package
-cd target/distribution
-sudo bash run-kiosk.sh
-```
