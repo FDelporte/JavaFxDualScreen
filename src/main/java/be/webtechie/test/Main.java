@@ -1,16 +1,10 @@
 package be.webtechie.test;
 
-import be.webtechie.test.pi4j.Pi4JHelper;
-import com.pi4j.io.gpio.digital.DigitalState;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
@@ -18,10 +12,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
 
@@ -101,41 +93,6 @@ public class Main extends Application {
         for (var i = 0; i < groups.size(); i++) {
             groups.get(i).getChildren().add(r);
         }
-    }
-
-    private HBox UserInterface(Pi4JHelper pi4JHelper) {
-        var holder = new HBox();
-        holder.setSpacing(20);
-        holder.setAlignment(Pos.CENTER);
-
-        holder.getChildren().add(new Label("Java version: " + System.getProperty("java.version")));
-        holder.getChildren().add(new Label("JavaFX version: " + System.getProperty("javafx.version")));
-
-        var led = pi4JHelper.getLed();
-        var bt = new Button("Toggle LED for 2 seconds");
-        bt.setOnAction(actionEvent -> {
-            try {
-                if (led != null) {
-                    led.pulse(2, TimeUnit.SECONDS);
-                }
-            } catch (com.pi4j.io.exception.IOException ex) {
-                pi4JHelper.getConsole().println("Error while toggling LED: " + ex.getMessage());
-            }
-        });
-        holder.getChildren().add(bt);
-
-        var lbl = new Label("Press the physical button to change this text");
-        holder.getChildren().add(lbl);
-        var physicalButton = pi4JHelper.getButton();
-        if (physicalButton != null) {
-            physicalButton.addListener(e -> {
-                if (e.state() == DigitalState.LOW) {
-                    Platform.runLater(() -> lbl.setText("Pressed button on " + LocalDateTime.now()));
-                }
-            });
-        }
-
-        return holder;
     }
 
     /**
